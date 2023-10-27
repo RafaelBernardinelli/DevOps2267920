@@ -154,9 +154,9 @@
                             <code>eval()</code>to convert user supplied contribution amounts to integer.
                             <pre>
         // Insecure use of eval() to parse inputs
-        var preTax = eval(req.body.preTax);
-        var afterTax = eval(req.body.afterTax);
-        var roth = eval(req.body.roth);
+    var preTax = parseInt(req.body.preTax);
+    var afterTax = parseInt(req.body.afterTax);
+    var roth = parseInt(req.body.roth);
                             </pre> This makes application vulnerable to SSJS attack. It can fixed simply by using
                             <code>parseInt()</code>instead.
                             <pre>
