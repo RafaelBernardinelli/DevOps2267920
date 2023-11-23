@@ -6,7 +6,7 @@ pipeline{
             steps {
                 sh '''
                     docker info
-                    java --version
+                    java -version
                     docker compose version
                 '''
             }
