@@ -9,7 +9,7 @@ pipeline {
                 }
             }
         }
-        slateste('Testes') {
+        stage('Testes') {
             steps {
                 script {
                     sh 'docker run -it nodegoat-web:latest npm run test'
