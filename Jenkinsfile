@@ -1,21 +1,20 @@
-pipeline{
+pipeline {
     agent any
 
     stages {
         stage('Instalar as dependências') {
             steps {
                 script {
-                    sh 'npm install'
-                    sh 'docker-compose up -d'
+                    sh 'docker build -t nodegoat-web:latest .'
                 }
             }
         }
-        stage('Testes') {
+        slateste('Testes') {
             steps {
                 script {
-                    sh 'npm run test'
-                    sh 'npm run test:ci'
-                    sh 'npm run test:e2e'
+                    sh 'docker run -it nodegoat-web:latest npm run test'
+                    sh 'docker run -it nodegoat-web:latest npm run test:ci'
+                    sh 'docker run -it nodegoat-web:latest npm run test:e2e'
                 }
             }
         }
