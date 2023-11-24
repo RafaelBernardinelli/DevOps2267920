@@ -2,7 +2,8 @@
 FROM node:12-alpine AS build
 WORKDIR /usr/src/app/
 COPY package*.json ./
-RUN apk --no-cache add \
+RUN apk add --no-cache \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
     libgconf \
     && npm install
 
