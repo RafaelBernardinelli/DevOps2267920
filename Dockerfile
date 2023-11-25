@@ -8,7 +8,10 @@ ENV USER node
 ENV WORKDIR /home/$USER/app
 WORKDIR $WORKDIR
 
-# Instalando dependências específicas do Alpine
+# Adiciona os repositórios de teste do Alpine
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
+# Instala as dependências
 RUN apk --no-cache add libgconf-2-4 gconf
 
 COPY --from=builder /usr/src/app/node_modules node_modules
