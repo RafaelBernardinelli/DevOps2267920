@@ -2,10 +2,9 @@ FROM node:12-alpine
 ENV WORKDIR /usr/src/app/
 WORKDIR $WORKDIR
 COPY package*.json $WORKDIR
-RUN apk --no-cache add \
-    libgconf-2-4 \
-    gconf \
-    && npm install --production --no-cache
+RUN npm install
+RUN RUN apk --no-cache add libgconf-2-4 gconf || \
+    (echo "Installing dependencies using pacman" && pacman -Sy --noconfirm libxss libxtst libnotify)
 
 FROM node:12-alpine
 ENV USER node
