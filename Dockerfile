@@ -1,23 +1,23 @@
-# Stage 1: Build dependencies
-FROM node:12-alpine AS build
-WORKDIR /usr/src/app/
-COPY package*.json ./
-RUN apk add --no-cache \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    libgconf \
-    && npm install
+FROM node:12-alpine
+ENV WORKDIR /usr/src/app/
+WORKDIR $WORKDIR
+COPY package*.json $WORKDIR
+RUN apk --no-cache add \
+    libgconf-2-4 \
+    gconf \
+    && npm install --production --no-cache
 
-# Stage 2: Copy dependencies to a smaller image
 FROM node:12-alpine
 ENV USER node
 ENV WORKDIR /home/$USER/app
 WORKDIR $WORKDIR
-COPY --from=build /usr/src/app/node_modules ./node_modules
-
-# Copy the rest of the application
-COPY . .
-
-# Set the user and expose the port
-RUN adduser -D $USER && chown -R $USER:$USER $WORKDIR
+COPY --from=0 /usr/src/app/node_modules node_modules
+RUN chown $USER:$USER $WORKDIR
+COPY --chown=node . $WORKDIR
+# In production environment uncomment the next line
+#RUN chown -R $USER:$USER /home/$USER && chmod -R g-s,o-rx /home/$USER && chmod -R o-wrx $WORKDIR
+# Then all further actions including running the containers should be done under non-root user.
 USER $USER
 EXPOSE 4000
+
+
