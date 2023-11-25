@@ -1,22 +1,18 @@
-FROM node:12-alpine
-ENV WORKDIR /usr/src/app/
-WORKDIR $WORKDIR
-COPY package*.json $WORKDIR
+FROM node:12-alpine as builder
+WORKDIR /usr/src/app/
+COPY package*.json ./
 RUN npm install
-RUN RUN apk --no-cache add libgconf-2-4 gconf || \
-    (echo "Installing dependencies using pacman" && pacman -Sy --noconfirm libxss libxtst libnotify)
 
 FROM node:12-alpine
 ENV USER node
 ENV WORKDIR /home/$USER/app
 WORKDIR $WORKDIR
-COPY --from=0 /usr/src/app/node_modules node_modules
-RUN chown $USER:$USER $WORKDIR
+
+# Instalando dependências específicas do Alpine
+RUN apk --no-cache add libgconf-2-4 gconf || \
+    (echo "Installing dependencies using pacman" && pacman -Sy --noconfirm libxss libxtst libnotify)
+
+COPY --from=builder /usr/src/app/node_modules node_modules
 COPY --chown=node . $WORKDIR
-# In production environment uncomment the next line
-#RUN chown -R $USER:$USER /home/$USER && chmod -R g-s,o-rx /home/$USER && chmod -R o-wrx $WORKDIR
-# Then all further actions including running the containers should be done under non-root user.
 USER $USER
 EXPOSE 4000
-
-

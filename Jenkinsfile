@@ -5,8 +5,8 @@ pipeline{
         stage('Instalar as dependências') {
             steps {
                 script {
-                    sh 'npm install'
                     sh 'docker-compose up -d'
+                    sh 'npm install'
                 }
             }
         }
