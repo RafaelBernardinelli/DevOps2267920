@@ -11,11 +11,11 @@ pipeline {
             }
         }
 
-        stage('Run E2E Tests') {
+        stage('Run Node.js Tests') {
             steps {
                 script {
-                    // Executar os testes E2E
-                    sh 'npm run test:e2e'
+                    // Executar os testes Node.js
+                    sh 'npm run test'
                 }
             }
         }
@@ -29,11 +29,11 @@ pipeline {
             }
         }
 
-        stage('Run Node.js Tests') {
+        stage('Run E2E Tests') {
             steps {
                 script {
-                    // Executar os testes Node.js
-                    sh 'npm run test'
+                    // Executar os testes E2E
+                    sh 'npm run test:e2e'
                 }
             }
         }
