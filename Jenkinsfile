@@ -11,6 +11,15 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Instalar as dependências do projeto
+                    sh 'npm install'
+                }
+            }
+        }
+
         stage('Run Node.js Tests') {
             steps {
                 script {
