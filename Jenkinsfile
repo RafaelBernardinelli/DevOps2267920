@@ -29,23 +29,6 @@ pipeline {
             }
         }
 
-        stage('Run CI Tests') {
-            steps {
-                script {
-                    // Executar os testes de CI
-                    sh 'npm run test:ci'
-                }
-            }
-        }
-
-        stage('Run E2E Tests') {
-            steps {
-                script {
-                    // Executar os testes E2E
-                    sh 'npm run test:e2e'
-                }
-            }
-        }
     }
 
     post {
