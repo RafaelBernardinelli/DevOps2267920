@@ -12,7 +12,9 @@ WORKDIR $WORKDIR
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 # Instala as dependências
-RUN apk --no-cache add libgconf-2-4 gconf
+RUN apk --no-cache add \
+    libgconf-2-4=3.2.6-r1 \
+    gconf=3.2.6-r1
 
 COPY --from=builder /usr/src/app/node_modules node_modules
 COPY --chown=node . $WORKDIR
