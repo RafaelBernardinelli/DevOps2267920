@@ -5,7 +5,7 @@
   "pluginsFile": "test/e2e/plugins/index.js",
   "screenshotsFolder": "test/e2e/screenshots",
   "videosFolder": "test/e2e/videos",
-  "supportFile": "test/,e2e/support/index.js",
+  "supportFile": "test/e2e/support/index.js",
   "video": false,
   "defaultCommandTimeout": 10000,
   "requestTimeout": 10000
