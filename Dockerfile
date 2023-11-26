@@ -1,17 +1,12 @@
-FROM node:12-alpine as builder
+FROM node:12 as builder
 WORKDIR /usr/src/app/
 COPY package*.json ./
 RUN npm install
 
-FROM node:12-alpine
+FROM node:12-slim
 ENV USER node
 ENV WORKDIR /home/$USER/app
 WORKDIR $WORKDIR
-
-# Instala as dependências necessárias
-RUN apk --no-cache add \
-    libgconf \
-    gconf
 
 COPY --from=builder /usr/src/app/node_modules node_modules
 COPY --chown=node . $WORKDIR
